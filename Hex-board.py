@@ -1,17 +1,21 @@
-def xy2str(row,column):
+def xy2str(row,column): 
+        #transfer x y coordinate (row,column) to special form. EX: [1][3] --> "A3"
+        #int row,column
         ans = ""
         ans += chr(row-1+ord("A"))
         ans += str(column)
         return ans
 
 def creat_smask(size): #crear search mask
+    #int size
     s = [[0 for i in range(size+2)] for j in range(size+2)]
     for i in range(1,size+1):
         for j in range(1,size+1):
             s[i][j]=1
     return s
 
-def dfs(self,search_mask,now,player): 
+def dfs(self,search_mask,now,player):
+    #check if the player connect to sides
     #string last,now. int player=1 or -1. int[][] search_mask (used to mark searched position)
     #print(now)
     #search_mask 0=searched
@@ -62,8 +66,8 @@ class hex_board:
         self.size = size #int size
         self.board = [[0 for i in range(size+2)] for j in range(size+2)] #board is a 2D int_array
         self.mask = [[0 for i in range(size+2)] for j in range(size+2)]  #0 and 1 matrix. 1 mean availble for move
-        self.pre_move = []                                               #pre_move for previous move
-        self.chess_on_edge = [[],[],[]]                 #second subarray for player 1,third is for player -1
+        self.pre_move = []                                               #pre_move for previous move. str[] pre_move
+        self.chess_on_edge = [[],[],[]]                                  #second subarray for player 1,third is for player -1
         self.winner = 0
     
     def build(self):                    
@@ -107,6 +111,7 @@ class hex_board:
         print("")
 
     def win(self,player): #check if this player wins
+        #int player
         s = creat_smask(self.size)
         if player==1:
             for i in range(1,self.size+1):
@@ -124,8 +129,8 @@ class hex_board:
             return 0
     def move(self,player,m): 
         #int player = 1 or -1. string array m. Ex: ["A5","E2"].
-        # #player is the person who make the first move in m.
-        # #first(letter) for row, second(number) for column. Left up coner is "A1".
+        #player is the person who make the first move in m.
+        #first(letter) for row, second(number) for column. Left up coner is "A1".
         i=0                  
         while i<len(m):      
             x = ord(m[i][0])-ord("A")+1   #for row
@@ -150,31 +155,13 @@ class hex_board:
             i += 1
             player *= -1
 
-'''
+
 #example usage
-m=["A3","A2"]    #The moves players make
+m=["A3","A2"]         #The moves players make
 test = hex_board(5)   #Declare a hex_board and its size
-test.build()          #Build up the board. This MUST be done before any further operation
+test.build()          #Build up the board. This function MUST be done before any further operation
 test.move(1,m)        #Make moves. Detail of argument is at definition area
 test.b_print()        #Show present board
-print(test.mask)
-print(test.winner)
-print(test.win(1))
-#print(s)'''
-#path = 'C:\Users\bendo\OneDrive\桌面\程式設計\Python\專題\test_data.txt'
-f = open(r"C:\Users\bendo\OneDrive\桌面\程式設計\Python\專題\test_data.txt",'r',encoding = "UTF-8")
-i=1
-test = hex_board(11)
+print(test.winner)    #Show winner(1 or -1) in this game. if the game isn't over the value will be 0
 
-for s in f.readlines():
-    test.build()
-    s = s.split()
-    m = s[:-1]
-    ans = int(s[-1])
-    test.move(-1,m)
-    #test.b_print()
-    print("line",i,end="")
-    if test.winner==ans: print(" pass")
-    else: print(" WA:",test.winner)
-    i += 1
     
