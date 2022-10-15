@@ -10,6 +10,7 @@ using namespace std;
 #define c sqrt(2)
 
 //Monte Carlo Tree Search - take "noughts and crosses" for example;
+//further explanation on https://hackmd.io/@yukicoder/Sy_irblGs;
 
 int random(int n){  //produce random number from 0 to n-1;
     srand(time(NULL));
